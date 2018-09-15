@@ -1,4 +1,5 @@
-﻿create table Brand(
+﻿
+create table Brand(
 Id uniqueidentifier primary key,
 Name nvarchar(50) not null,
 LogoFileName nvarchar (50) 
@@ -36,6 +37,10 @@ Price int,
 BrandId uniqueidentifier,
 constraint FK_Category  foreign key (BrandId) references Category(Id)
 );
+alter table Product add constraint Default_Discount  default 0 for Discount;
+
+alter table Product drop constraint FK_Category;
+alter table Product add constraint FK_Category foreign key (CategoryId,BrandId) references CategoryBrand(CategoryId,BrandId);
 
 create table Stock(
 ProductId uniqueidentifier primary key constraint FK_Product  foreign key (ProductId) references Product(Id),
