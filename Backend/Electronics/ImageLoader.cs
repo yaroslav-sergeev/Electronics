@@ -8,7 +8,7 @@ namespace Electronics
 {
     public static class ImageLoader
     {
-        public static async Task<byte[]> GetBytesAsync(string fileName)
+        private static async Task<byte[]> GetBytesAsync(string fileName)
         {
             try
             {
@@ -20,8 +20,16 @@ namespace Electronics
             catch (Exception)
             {
                 return Array.Empty<byte>();
+            }                      
+        }
+
+        public static async Task<string> CreateBase64Image(string fileName)
+        {
+            using (MemoryStream ms = new MemoryStream(await GetBytesAsync(fileName)))
+            {
+                /* Create a new image, saved as a scaled version of the original */
+                return Convert.ToBase64String(ms.ToArray());
             }
-                       
         }
     }
 }
