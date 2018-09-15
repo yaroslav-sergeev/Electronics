@@ -17,7 +17,7 @@ namespace Electronics.Repositories.Concrete
 
         public async Task AddBrandAsync(BrandEntity entity)
         {
-            string query = "insert into Brand values(@Id,@Name,@LogoPath)";
+            string query = "insert into Brand values(@Id,@Name)";
 
             try
             {

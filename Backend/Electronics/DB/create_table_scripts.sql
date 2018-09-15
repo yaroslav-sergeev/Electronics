@@ -5,6 +5,8 @@ Name nvarchar(50) not null,
 LogoFileName nvarchar (50) 
 );
 
+alter table Brand drop column LogoPath;
+
 create table Client(
 Id uniqueidentifier primary key,
 FirstName nvarchar(50),
@@ -37,8 +39,9 @@ Price int,
 BrandId uniqueidentifier,
 constraint FK_Category  foreign key (BrandId) references Category(Id)
 );
-alter table Product add constraint Default_Discount  default 0 for Discount;
 
+alter table Product add constraint Default_Discount  default 0 for Discount;
+alter table Product add CategoryId uniqueidentifier;
 alter table Product drop constraint FK_Category;
 alter table Product add constraint FK_Category foreign key (CategoryId,BrandId) references CategoryBrand(CategoryId,BrandId);
 
