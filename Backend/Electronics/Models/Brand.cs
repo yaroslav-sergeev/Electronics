@@ -9,7 +9,7 @@ namespace Electronics.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public byte[] LogoData { get; set; }
-        public string LogoPath { get; set; }
+        //public byte[] LogoData { get; set; }
+        //public string LogoPath { get; set; }
     }
 }

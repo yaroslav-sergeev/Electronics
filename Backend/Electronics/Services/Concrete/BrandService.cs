@@ -14,9 +14,14 @@ namespace Electronics.Services.Concrete
     public class BrandService : IBrandService
     {
         private readonly IBrandRepository brandRepository;
-        private readonly IConverter converter = new Converter();
+        //private readonly IConverter converter =new Converter();
+        private readonly IConverter converter;
 
-        public BrandService(string connectionString) => brandRepository = new BrandRepository(connectionString);
+        public BrandService(string connectionString)
+        {
+            brandRepository = new BrandRepository(connectionString);
+            converter = new Converter(connectionString);
+        }
 
         public async Task AddBrandAsync(Brand brand)
         {

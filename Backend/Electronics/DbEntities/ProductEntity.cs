@@ -18,5 +18,6 @@ namespace Electronics.DbEntities
         public int Price { get; set; }
         
         public Guid BrandId { get; set; }
+        public Guid CategoryId { get; set; }
     }
 }

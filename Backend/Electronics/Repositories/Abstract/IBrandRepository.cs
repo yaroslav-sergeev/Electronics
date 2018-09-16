@@ -10,6 +10,7 @@ namespace Electronics.Repositories.Abstract
     {
         Task<IEnumerable<BrandEntity>> GetAllAsync();
         Task<BrandEntity> GetBrandByIdAsync(Guid brandId);
+        Task<BrandEntity> GetBrandByNameAsync(string brandName);
         Task DeleteByIdAsync(Guid brandId);
         Task UpdateBrandAsync(BrandEntity brand);
         Task AddBrandAsync(BrandEntity entity);
