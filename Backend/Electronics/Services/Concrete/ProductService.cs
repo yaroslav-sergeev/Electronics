@@ -32,14 +32,23 @@ namespace Electronics.Services.Concrete
             return dbProducts.Select(product => converter.MapProductEntityToProductModel(product).Result);
         }
 
-        public Task<Product> GetByIdAsync(Guid productId)
+        public async Task<Product> GetByIdAsync(Guid productId)
         {
-            throw new NotImplementedException();
+            return await converter.MapProductEntityToProductModel(await productRepository.GetProductByIdAsync(productId));
         }
 
-        public Task<IEnumerable<Product>> GetProductByCaqtegory(string category)
+        public async Task<IEnumerable<Product>> GetProductByBrandAndCategoryAsync(string brand, string category)
         {
-            throw new NotImplementedException();
+            IEnumerable<ProductEntity> dbProducts = await productRepository.GetProductByBrandAndCategoryAsync(brand, category);
+
+            return dbProducts.Select(product => converter.MapProductEntityToProductModel(product).Result);
+        }
+
+        public async Task<IEnumerable<Product>> GetProductByCategory(string category)
+        {
+            IEnumerable<ProductEntity> products = await productRepository.GetProductByCategory(category);
+
+            return products.Select(product => converter.MapProductEntityToProductModel(product).Result);
         }
 
         public Task UpdateProductAsync(Product product)

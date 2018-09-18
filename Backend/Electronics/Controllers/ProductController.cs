@@ -15,12 +15,35 @@ namespace Electronics.Controllers
 
         public ProductController(IProductService productService) => this.productService = productService;
 
-       [HttpGet]
-       public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAll() => new OkObjectResult(await productService.GetAllAsync());
+
+        [HttpGet("{brand}/{category}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductByBrandAndCategoryAsync(string brand, string category)
         {
-            return new OkObjectResult( await productService.GetAllAsync());
+            brand = brand.ToLower();
+            brand = brand.Replace(brand[0], char.ToUpper(brand[0]));// BRAND || brand  -> Brand
+
+            category = category.ToLower();
+            category = category.Replace(category[0], char.ToUpper(category[0]));
+            return new OkObjectResult(await productService.GetProductByBrandAndCategoryAsync(brand, category));
         }
 
-      
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProductById(Guid id)
+        {
+            if (id == null) return new BadRequestObjectResult(null);
+
+            return new OkObjectResult(await productService.GetByIdAsync(id));
+        }
+
+        [HttpGet("{category}")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string category)
+        {
+            category = category.ToLower();
+            category = category.Replace(category[0], char.ToUpper(category[0]));
+
+            return new OkObjectResult(await productService.GetProductByCategory(category));
+        }
     }
 }

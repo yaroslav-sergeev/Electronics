@@ -12,6 +12,7 @@ namespace Electronics.Services.Abstract
         Task<Product> GetByIdAsync(Guid productId);
         Task DeleteByIdAsync(Guid productId);
         Task UpdateProductAsync(Product product);
-        Task<IEnumerable<Product>> GetProductByCaqtegory(string category);
+        Task<IEnumerable<Product>> GetProductByCategory(string category);
+        Task<IEnumerable<Product>> GetProductByBrandAndCategoryAsync(string brand, string category);
     }
 }

@@ -4,11 +4,13 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ListOfProductsComponent } from './list-of-products/list-of-products.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    ListOfProductsComponent,
 
   ],
   imports: [

@@ -24,15 +24,55 @@ namespace Electronics.Repositories.Concrete
         {
             string query = "select * from Product";
 
-            using (var connection =new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
-               return await connection.QueryAsync<ProductEntity>(query);
+                return await connection.QueryAsync<ProductEntity>(query);
             }
         }
 
-        public Task<IEnumerable<ProductEntity>> GetProductByCaqtegory(string category)
+        public async Task<IEnumerable<ProductEntity>> GetProductByBrandAndCategoryAsync(string brand, string category)
         {
-            throw new NotImplementedException();
+            string query = "select Product.* from (((select Category.Id from Category where Name=@category) as Cat inner join CategoryBrand on Cat.Id=CategoryBrand.CategoryId)" +
+                            "inner join(select Brand.Id from Brand where Name= @brand) as Br on CategoryBrand.BrandId = Br.Id)" +
+                            "inner join Product on Product.BrandId = CategoryBrand.BrandId and Product.CategoryId = CategoryBrand.CategoryId";
+
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    return await connection.QueryAsync<ProductEntity>(query,new { brand, category });
+                }
+            }
+            catch (SqlException sql)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<ProductEntity>> GetProductByCategory(string category)
+        {
+            string query = "select Product.* from ((select Id from Category where Name=@category) as Cat inner join CategoryBrand on Cat.Id=CategoryBrand.CategoryId)"+
+                            "inner join Product on Product.CategoryId=CategoryBrand.CategoryId and CategoryBrand.BrandId=Product.BrandId";
+
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    return await connection.QueryAsync<ProductEntity>(query, new { category });
+                }
+            }
+            catch (SqlException sql)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         public async Task<ProductEntity> GetProductByIdAsync(Guid productId)
@@ -41,7 +81,7 @@ namespace Electronics.Repositories.Concrete
 
             using (var connection = new SqlConnection(connectionString))
             {
-                return await connection.QuerySingleAsync<ProductEntity>(query,new { Id=productId });
+                return await connection.QuerySingleAsync<ProductEntity>(query, new {Id =productId });
             }
         }
 

@@ -37,13 +37,6 @@ namespace Electronics.Controllers
         [HttpPost]
         public async Task<ActionResult<Brand>> AddBrand([FromBody] Brand brand)
         {           
-            //var brand1 = new Brand
-            //{
-            //    Id = Guid.NewGuid(),
-            //    Name = "Apple",
-            //    LogoData = null,
-            //    LogoFileName = String.Empty
-            //};
             await brandService.AddBrandAsync(brand);
             return new OkObjectResult(brand);
         }
@@ -54,18 +47,6 @@ namespace Electronics.Controllers
             return Guid.NewGuid();
         }
 
-        [HttpGet("img")]
-        public FileResult FileResult()
-        {
-            string fileName = Path.Combine(appEnvironment.WebRootPath, "images", $@"\{"a.jpg"}");
-
-            return File(fileName, "image/jpeg");
-        }
-
-        [HttpGet("c")]
-        public string Sc()
-        {
-            return Environment.CurrentDirectory;
-        }
+        
     }
 }
