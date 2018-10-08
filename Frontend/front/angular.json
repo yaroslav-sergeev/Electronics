@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "electronics-front": {
+    "front": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/electronics-front",
+            "outputPath": "dist/front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,17 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/font-awesome/scss/font-awesome.scss",
-              "./node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
-              "./node_modules/angular-bootstrap-md/scss/mdb-free.scss",
-              "src/styles.scss"
+              "src/styles.css"
             ],
-            "scripts": [
-              "./node_modules/popper.js/dist/popper.min.js",
-              "./node_modules/chart.js/dist/Chart.js",
-              "./node_modules/hammerjs/hammer.min.js"        
-           
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -58,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "electronics-front:build"
+            "browserTarget": "front:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "electronics-front:build:production"
+              "browserTarget": "front:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "electronics-front:build"
+            "browserTarget": "front:build"
           }
         },
         "test": {
@@ -103,7 +95,7 @@
         }
       }
     },
-    "electronics-front-e2e": {
+    "front-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -111,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "electronics-front:serve"
+            "devServerTarget": "front:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "electronics-front:serve:production"
+              "devServerTarget": "front:serve:production"
             }
           }
         },
@@ -131,10 +123,5 @@
       }
     }
   },
-  "defaultProject": "electronics-front",
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
-  }
+  "defaultProject": "front"
 }

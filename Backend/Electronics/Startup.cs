@@ -14,16 +14,14 @@ namespace Electronics
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
            string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddScoped<IProductService,ProductService>(provider=>new ProductService(connection));
             services.AddScoped<IBrandService, BrandService>(provider => new BrandService(connection));
@@ -40,7 +38,14 @@ namespace Electronics
                 c.IncludeXmlComments(xmlPath);
             });
 
-           
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials();
+            }));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +55,9 @@ namespace Electronics
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("MyPolicy");
+
             app.UseStaticFiles();
 
             app.UseSwagger();
