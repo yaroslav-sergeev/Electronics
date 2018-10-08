@@ -9,13 +9,13 @@ namespace Electronics
 {
     public interface IConverter
     {
-        Task<Product> MapProductEntityToProductModel(ProductEntity entity);
-        Task<ProductEntity> MapProductModelToProductEntity(Product product);
+        Task<Product> ConvertProductEntityToProductModel(ProductEntity entity);
+        Task<ProductEntity> ConvertProductModelToProductEntity(Product product);
 
-        Task<Brand> MapBrandEntityToBrandModel(BrandEntity entity);
-        Task<BrandEntity> MapBrandModelToBrandEntity(Brand brand);
+        Task<Brand> ConvertBrandEntityToBrandModel(BrandEntity entity);
+        Task<BrandEntity> ConvertBrandModelToBrandEntity(Brand brand);
 
-        Task<Category> MapCategoryEntityToCategoryModel(CategoryEntity entity);
-        Task<CategoryEntity> MapCategoryModelToCategoryEntity(Category category);
+        Task<Category> ConvertCategoryEntityToCategoryModel(CategoryEntity entity);
+        Task<CategoryEntity> ConvertCategoryModelToCategoryEntity(Category category);
     }
 }

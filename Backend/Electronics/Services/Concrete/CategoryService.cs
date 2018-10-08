@@ -23,14 +23,14 @@ namespace Electronics.Services.Concrete
 
         public async Task AddCategoryAsync(Category category)
         {
-           await categoryRepository.AddCategoryAsync(converter.MapCategoryModelToCategoryEntity(category).Result);
+           await categoryRepository.AddCategoryAsync(converter.ConvertCategoryModelToCategoryEntity(category).Result);
         }
 
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             IEnumerable<CategoryEntity> dbCategories = await categoryRepository.GetAllAsync();
 
-            return  dbCategories.Select(category => converter.MapCategoryEntityToCategoryModel(category).Result);              
+            return  dbCategories.Select(category => converter.ConvertCategoryEntityToCategoryModel(category).Result);              
         }
     }
 }

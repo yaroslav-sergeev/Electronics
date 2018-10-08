@@ -26,8 +26,7 @@ namespace Electronics
             services.AddScoped<IProductService,ProductService>(provider=>new ProductService(connection));
             services.AddScoped<IBrandService, BrandService>(provider => new BrandService(connection));
 
-           
-
+          
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(c =>

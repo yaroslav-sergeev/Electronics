@@ -11,18 +11,17 @@ namespace Electronics
         private readonly IBrandRepository brandRepository;
         private readonly ICategoryRepository categoryRepository;
 
-
         public Converter(string connectionString)
         {
             brandRepository = new BrandRepository(connectionString);
             categoryRepository = new CategoryRepository(connectionString);
         }
 
-        public Task<Product> MapProductEntityToProductModel(ProductEntity entity)
+        public Task<Product> ConvertProductEntityToProductModel(ProductEntity entity)
         {
             return Task.Run(() =>
             {
-               return new Product
+                return new Product
                 {
                     Id = entity.Id,
                     Name = entity.Name,
@@ -33,14 +32,14 @@ namespace Electronics
                     Discount = entity.Discount,
                     Price = entity.Price,
                     ImagePath = entity.ImagePath,
-                    ImageData = ImageLoader.CreateBase64Image(entity.ImagePath).Result,
+                    ImageData = ImageLoader.CreateBase64Image(entity.ImagePath).Result ?? "unknown",
                     Brand = brandRepository.GetBrandByIdAsync(entity.BrandId).Result?.Name ?? "unknown",
                     Category = categoryRepository.GetCategoryByIdAsync(entity.CategoryId).Result?.Name ?? "unknown"
-                };            
+                };
             });
         }
 
-        public Task<ProductEntity> MapProductModelToProductEntity(Product product)
+        public Task<ProductEntity> ConvertProductModelToProductEntity(Product product)
         {
             return Task.Run(() =>
             {
@@ -57,13 +56,11 @@ namespace Electronics
                     ImagePath = product.ImagePath,
                     BrandId = brandRepository.GetBrandByNameAsync(product.Brand).Result.Id,
                     CategoryId = categoryRepository.GetCategoryByNameAsync(product.Category).Result.Id
-
                 };
             });
-
         }
 
-        public Task<Brand> MapBrandEntityToBrandModel(BrandEntity entity)
+        public Task<Brand> ConvertBrandEntityToBrandModel(BrandEntity entity)
         {
             return Task.Run(() =>
              {
@@ -75,7 +72,7 @@ namespace Electronics
              });
         }
 
-        public Task<BrandEntity> MapBrandModelToBrandEntity(Brand brand)
+        public Task<BrandEntity> ConvertBrandModelToBrandEntity(Brand brand)
         {
             return Task.Run(() =>
             {
@@ -87,7 +84,7 @@ namespace Electronics
             });
         }
 
-        public Task<Category> MapCategoryEntityToCategoryModel(CategoryEntity entity)
+        public Task<Category> ConvertCategoryEntityToCategoryModel(CategoryEntity entity)
         {
             return Task.Run(() =>
             {
@@ -99,7 +96,7 @@ namespace Electronics
             });
         }
 
-        public Task<CategoryEntity> MapCategoryModelToCategoryEntity(Category category)
+        public Task<CategoryEntity> ConvertCategoryModelToCategoryEntity(Category category)
         {
             return Task.Run(() =>
             {

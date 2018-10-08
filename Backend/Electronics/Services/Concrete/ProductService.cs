@@ -20,6 +20,11 @@ namespace Electronics.Services.Concrete
             converter = new Converter(connectionString);
         }
 
+        public async Task AddProductAsync(Product product)
+        {
+          await productRepository.AddProductAsync(converter.ConvertProductModelToProductEntity(product).Result);
+        }
+
         public Task DeleteByIdAsync(Guid productId)
         {
             throw new NotImplementedException();
@@ -28,27 +33,27 @@ namespace Electronics.Services.Concrete
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             IEnumerable<ProductEntity> dbProducts = await productRepository.GetAllAsync();
-
-            return dbProducts.Select(product => converter.MapProductEntityToProductModel(product).Result);
+  
+            return dbProducts.Select(product =>converter.ConvertProductEntityToProductModel(product).Result);
         }
 
         public async Task<Product> GetByIdAsync(Guid productId)
         {
-            return await converter.MapProductEntityToProductModel(await productRepository.GetProductByIdAsync(productId));
+            return await converter.ConvertProductEntityToProductModel(await productRepository.GetProductByIdAsync(productId));
         }
 
         public async Task<IEnumerable<Product>> GetProductByBrandAndCategoryAsync(string brand, string category)
         {
             IEnumerable<ProductEntity> dbProducts = await productRepository.GetProductByBrandAndCategoryAsync(brand, category);
 
-            return dbProducts.Select(product => converter.MapProductEntityToProductModel(product).Result);
+            return dbProducts.Select(product => converter.ConvertProductEntityToProductModel(product).Result);
         }
 
         public async Task<IEnumerable<Product>> GetProductByCategory(string category)
         {
             IEnumerable<ProductEntity> products = await productRepository.GetProductByCategory(category);
 
-            return products.Select(product => converter.MapProductEntityToProductModel(product).Result);
+            return products.Select(product => converter.ConvertProductEntityToProductModel(product).Result);
         }
 
         public Task UpdateProductAsync(Product product)

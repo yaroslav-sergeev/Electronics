@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Electronics.Models;
 using Electronics.Services.Abstract;
@@ -8,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics.Controllers
 {
-    [Route("api/product")]
+    [Route("api/products")]
     public class ProductController : Controller
     {
         private readonly IProductService productService;
@@ -17,12 +16,14 @@ namespace Electronics.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetAll() => new OkObjectResult(await productService.GetAllAsync());
-
+       
         [HttpGet("{brand}/{category}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByBrandAndCategoryAsync(string brand, string category)
         {
             brand = brand.ToLower();
-            brand = brand.Replace(brand[0], char.ToUpper(brand[0]));// BRAND || brand  -> Brand
+
+            // convert name e.g. BRAND || brand  -> Brand
+            brand = brand.Replace(brand[0], char.ToUpper(brand[0]));
 
             category = category.ToLower();
             category = category.Replace(category[0], char.ToUpper(category[0]));
@@ -45,5 +46,16 @@ namespace Electronics.Controllers
 
             return new OkObjectResult(await productService.GetProductByCategory(category));
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Product>> AddProduct([FromBody] Product product)
+        {
+            await productService.AddProductAsync(product);
+
+            return new OkObjectResult(product);
+        }
+
+        [HttpGet("g")]
+        public Guid G() => Guid.NewGuid();
     }
 }

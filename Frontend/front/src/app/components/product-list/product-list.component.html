@@ -1,0 +1,10 @@
+<div class="contsiner">
+
+  <div class="row">    
+    <div class="col-md-2" *ngFor="let product of products">
+      <div class="text">{{product.name}}</div>
+      <div class="text">{{product.brand}}</div>
+      <img src="data:image/png;base64,{{product.imageData}}" alt="image of product" height="200px">
+    </div>
+  </div>
+</div>

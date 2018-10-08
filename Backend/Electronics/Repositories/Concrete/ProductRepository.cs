@@ -15,6 +15,27 @@ namespace Electronics.Repositories.Concrete
 
         public ProductRepository(string connectionString) => this.connectionString = connectionString;
 
+        public async Task AddProductAsync(ProductEntity productEntity)
+        {
+            string query = $"insert into Product values(Id,Name,Color,Dimentions,Weight,Os,Discount,ImagePath,Price,BrandId,CategoryId)";
+
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    await connection.ExecuteAsync(query,productEntity);
+                }
+            }
+            catch (SqlException sql)
+            {
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
         public Task DeleteByIdAsync(Guid productId)
         {
             throw new NotImplementedException();

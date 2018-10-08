@@ -12,24 +12,35 @@ namespace Electronics
         {
             try
             {
-                string path = Path.Combine(Environment.CurrentDirectory, "wwwroot/images", $@"\{fileName}");
+                string path = Path.Combine(Environment.CurrentDirectory, $@"wwwroot\images\{fileName}.png");
 
                 byte[] image = await File.ReadAllBytesAsync(path);
                 return image;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Array.Empty<byte>();
+                throw new InvalidOperationException();
+                //return Array.Empty<byte>();
             }                      
         }
 
         public static async Task<string> CreateBase64Image(string fileName)
         {
-            using (MemoryStream ms = new MemoryStream(await GetBytesAsync(fileName)))
+             if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException();
+
+            try
             {
-                /* Create a new image, saved as a scaled version of the original */
-                return Convert.ToBase64String(ms.ToArray());
+                using (MemoryStream ms = new MemoryStream(await GetBytesAsync(fileName)))
+                {
+                    /* Create a new image, saved as a scaled version of the original */
+                    return Convert.ToBase64String(ms.ToArray());
+                }
             }
+            catch(Exception e)
+            {
+                throw;
+            }
+            
         }
     }
 }

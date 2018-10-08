@@ -14,5 +14,6 @@ namespace Electronics.Services.Abstract
         Task UpdateProductAsync(Product product);
         Task<IEnumerable<Product>> GetProductByCategory(string category);
         Task<IEnumerable<Product>> GetProductByBrandAndCategoryAsync(string brand, string category);
+        Task AddProductAsync(Product product);
     }
 }

@@ -25,7 +25,7 @@ namespace Electronics.Services.Concrete
 
         public async Task AddBrandAsync(Brand brand)
         {
-            await brandRepository.AddBrandAsync(await converter.MapBrandModelToBrandEntity(brand));
+            await brandRepository.AddBrandAsync(await converter.ConvertBrandModelToBrandEntity(brand));
         }
 
         public Task DeleteByIdAsync(Guid brandId)
@@ -39,7 +39,7 @@ namespace Electronics.Services.Concrete
 
             // List<Brand> brands = null;
 
-            var sdv = dbBrands.Select(brand => converter.MapBrandEntityToBrandModel(brand).Result);
+            var sdv = dbBrands.Select(brand => converter.ConvertBrandEntityToBrandModel(brand).Result);
             //foreach (var brand in dbBrands)
             //{
             //    brands.Add(Converter.MapBrandEntityToBrandModel(brand).Result);
