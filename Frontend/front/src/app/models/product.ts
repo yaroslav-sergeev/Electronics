@@ -1,7 +1,7 @@
 import { Guid } from "guid-typescript";
 
-export interface Product {
-    id: Guid;
+export class Product {
+    id: Guid
     name: string;
     brand: string;
     category: string;

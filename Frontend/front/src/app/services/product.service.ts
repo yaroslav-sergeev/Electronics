@@ -15,5 +15,10 @@ export class ProductService {
     return this.http.get<Product[]>(this.baseUrl);
   }
 
+  getProductById(productId:string):Observable<Product>
+  {
+    const url =`${this.baseUrl}/detail/${productId}`;
+   return this.http.get<Product>(url);
+  }
 
 }

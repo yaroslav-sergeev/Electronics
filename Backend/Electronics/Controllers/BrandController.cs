@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics.Controllers
 {
-    [Produces("application/json")]
     [Route("api/brand")]
     public class BrandController : Controller
     {
@@ -39,14 +38,6 @@ namespace Electronics.Controllers
         {           
             await brandService.AddBrandAsync(brand);
             return new OkObjectResult(brand);
-        }
-
-        [HttpGet("g")]
-        public Guid HJkk()
-        {
-            return Guid.NewGuid();
-        }
-
-        
+        }       
     }
 }

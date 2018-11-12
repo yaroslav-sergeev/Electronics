@@ -64,7 +64,7 @@ namespace Electronics
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "e-commerce test api");
-                c.RoutePrefix = String.Empty;
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseMvc();

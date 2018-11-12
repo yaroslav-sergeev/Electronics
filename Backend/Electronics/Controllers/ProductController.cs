@@ -15,14 +15,14 @@ namespace Electronics.Controllers
         public ProductController(IProductService productService) => this.productService = productService;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll() => new OkObjectResult(await productService.GetAllAsync());
+        public async Task<ActionResult<IEnumerable<Product>>> GetAll() => 
+            new OkObjectResult(await productService.GetAllAsync());
        
         [HttpGet("{brand}/{category}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByBrandAndCategoryAsync(string brand, string category)
         {
-            brand = brand.ToLower();
-
             // convert name e.g. BRAND || brand  -> Brand
+            brand = brand.ToLower();          
             brand = brand.Replace(brand[0], char.ToUpper(brand[0]));
 
             category = category.ToLower();
@@ -30,13 +30,12 @@ namespace Electronics.Controllers
             return new OkObjectResult(await productService.GetProductByBrandAndCategoryAsync(brand, category));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("detail/{id}")]
         public async Task<ActionResult<Product>> GetProductById(Guid id)
-        {
-            if (id == null) return new BadRequestObjectResult(null);
-
+        {            
             return new OkObjectResult(await productService.GetByIdAsync(id));
         }
+
 
         [HttpGet("{category}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategory(string category)
