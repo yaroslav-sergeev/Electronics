@@ -15,5 +15,6 @@ namespace Electronics.Services.Abstract
         Task<IEnumerable<Product>> GetProductByCategory(string category);
         Task<IEnumerable<Product>> GetProductByBrandAndCategoryAsync(string brand, string category);
         Task AddProductAsync(Product product);
+        Task<IEnumerable<Product>> GetProductsInRangeAsync(int low, int? high = null);
     }
 }

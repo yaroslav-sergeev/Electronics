@@ -43,11 +43,9 @@ namespace Electronics.Repositories.Concrete
 
         public async Task<IEnumerable<ProductEntity>> GetAllAsync()
         {
-            string query = "select * from Product";
-
             using (var connection = new SqlConnection(connectionString))
             {
-                return await connection.QueryAsync<ProductEntity>(query);
+                return await connection.QueryAsync<ProductEntity>("select * from Product");
             }
         }
 
@@ -99,10 +97,20 @@ namespace Electronics.Repositories.Concrete
         public async Task<ProductEntity> GetProductByIdAsync(Guid productId)
         {
             string query = "select * from Product where Id=@Id";
-
             using (var connection = new SqlConnection(connectionString))
             {
-                return await connection.QuerySingleAsync<ProductEntity>(query, new {Id =productId });
+                return await connection.QueryFirstOrDefaultAsync<ProductEntity>(query, new {Id =productId });
+            }
+        }
+
+        public async Task<IEnumerable<ProductEntity>> GetProductsInRangeAsync(int low, int? high = null)
+        {
+            string query = high == null ? "select * from Product where Price >=@low"
+                                        : "select * from Product where Price between @low and  @high";
+            using (var connection = new SqlConnection(connectionString))
+            {
+                return high == null ? await connection.QueryAsync<ProductEntity>(query, new { low })
+                                    : await connection.QueryAsync<ProductEntity>(query, new { low,high });
             }
         }
 

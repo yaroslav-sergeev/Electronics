@@ -32,14 +32,17 @@ namespace Electronics.Services.Concrete
 
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
-            IEnumerable<ProductEntity> dbProducts = await productRepository.GetAllAsync();
-  
+            IEnumerable<ProductEntity> dbProducts = await productRepository.GetAllAsync(); 
             return dbProducts.Select(product =>converter.ConvertProductEntityToProductModel(product).Result);
         }
 
         public async Task<Product> GetByIdAsync(Guid productId)
         {
-            return await converter.ConvertProductEntityToProductModel(await productRepository.GetProductByIdAsync(productId));
+            ProductEntity productEntity = await productRepository.GetProductByIdAsync(productId);
+
+            if (productEntity == null) return null;
+
+            return await converter.ConvertProductEntityToProductModel(productEntity);
         }
 
         public async Task<IEnumerable<Product>> GetProductByBrandAndCategoryAsync(string brand, string category)
@@ -54,6 +57,18 @@ namespace Electronics.Services.Concrete
             IEnumerable<ProductEntity> products = await productRepository.GetProductByCategory(category);
 
             return products.Select(product => converter.ConvertProductEntityToProductModel(product).Result);
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsInRangeAsync(int low, int? high = null)
+        {
+            IEnumerable<ProductEntity> dbProducts = await productRepository.GetProductsInRangeAsync(low, high);
+
+            List<Product> products = new List<Product>();
+            foreach (var product in dbProducts)
+                products.Add(await converter.ConvertProductEntityToProductModel(product));
+
+            // IE<Product> products= dbProducts.Select( product => converter.ConvertProductEntityToProductModel(product).Result);
+            return products;
         }
 
         public Task UpdateProductAsync(Product product)

@@ -22,9 +22,10 @@ namespace Electronics
         public void ConfigureServices(IServiceCollection services)
         {
 
-           string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddScoped<IProductService,ProductService>(provider=>new ProductService(connection));
-            services.AddScoped<IBrandService, BrandService>(provider => new BrandService(connection));
+             //string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            string connectionString= "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = D:\\PROJECTS\\ELECTRONICS\\BACKEND\\ELECTRONICS\\DB\\ELECTRONICS.MDF; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+            services.AddScoped<IProductService,ProductService>(provider=>new ProductService(connectionString));
+            services.AddScoped<IBrandService, BrandService>(provider => new BrandService(connectionString));
 
           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

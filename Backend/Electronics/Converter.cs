@@ -32,7 +32,8 @@ namespace Electronics
                     Discount = entity.Discount,
                     Price = entity.Price,
                     ImagePath = entity.ImagePath,
-                    ImageData = ImageLoader.CreateBase64Image(entity.ImagePath).Result ?? "unknown",
+                    // ImageData = ImageLoader.CreateBase64Image(entity.ImagePath).Result ?? "unknown",
+                    ImageData = null,
                     Brand = brandRepository.GetBrandByIdAsync(entity.BrandId).Result?.Name ?? "unknown",
                     Category = categoryRepository.GetCategoryByIdAsync(entity.CategoryId).Result?.Name ?? "unknown"
                 };

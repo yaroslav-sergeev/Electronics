@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Electronics</name>
+    </assembly>
+    <members>
+        <member name="M:Electronics.Controllers.BrandController.GetAllAsync">
+            <summary>
+            Get all brands
+            </summary>
+            <returns>list of brands</returns>
+        </member>
+    </members>
+</doc>
